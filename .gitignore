@@ -1,0 +1,11 @@
+# .gitignore (final clean version)
+node_modules/
+dist/
+.env*
+*.pem
+*.log
+logs/
+public/images/
+.DS_Store
+.vscode/
+.idea/

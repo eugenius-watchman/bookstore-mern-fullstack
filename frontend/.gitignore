@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+node_modules/
+.env
+public/images/
+.DS_Store
+
+# .gitignore additions
+.env*
+.env.local
+*.pem
+config/*.json

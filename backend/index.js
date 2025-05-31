@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, { request, response } from "express";
 import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
@@ -19,8 +20,9 @@ app.use(cors());
 //     method: ['GET', 'POST', 'PUT', 'DELETE'],
 //     allowHeaders: ['Content-Type']
 // }));
+app.use(express.urlencoded({ extended: true })); // For URL-encoded bodies
 
-app.use('/images', express.static('public/images'));
+app.use('/images', express.static('public/images'));// Serve static files
 
 
 // Routes
@@ -31,8 +33,9 @@ app.get("/", (request, response) => {
 
 app.use("/books", booksRoute);
 
+// Connect to MongoDB
 mongoose
-  .connect(mongoDBURL)
+  .connect(mongoDBURL || process.env.MONGODB_URI)  // Use config.js value or fallback to env variable
   .then(() => {
     console.log("App connected to database successfully");
     app.listen(PORT, () => {
