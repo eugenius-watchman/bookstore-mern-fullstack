@@ -41,7 +41,7 @@ const EditBook = () => {
       });
   }, [id, navigate]);
 
-  const handleSaveBook = async () => {
+  const handleEditBook = async () => {
     if (!title || !author || !publishYear || !summary) {
       alert("Please fill all required fields");
       return;
@@ -60,7 +60,7 @@ const EditBook = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:5555/books", formData, {
+      await axios.put(`http://localhost:5555/books/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -69,11 +69,8 @@ const EditBook = () => {
 
       navigate("/");
     } catch (error) {
-      console.error("Error details:", {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-      });
+      console.error("Error:", error.response?.data || error.message);
+
       alert(`Error: ${error.response?.data?.message || "Failed to save book"}`);
     } finally {
       setLoading(false);
@@ -170,7 +167,7 @@ const EditBook = () => {
         </div>
         <button
           className="p-2 bg-sky-300 m-8 hover:bg-sky-500 disabled:bg-gray-400"
-          onClick={handleSaveBook}
+          onClick={handleEditBook}
           disabled={loading}
         >
           {loading ? "Saving..." : "Save Changes"}
